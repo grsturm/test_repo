@@ -47,17 +47,17 @@ jobs:
           target_dir=$(echo $tmp_target_dir | sed "s/heads\/main/develop/")
           echo $target_dir
           echo "target_dir=$target_dir" >> $GITHUB_ENV
-          mkdir -p deploy/$target_dir
-          rmdir deploy/$target_dir
-          mv html deploy/$target_dir
         env:
           github_ref: ${{ github.ref }}
 
       - name: Deploy to gh-pages
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        if: ( matrix.os == 'ubuntu-latest' ) &&  ( matrix.python-version == '3.8' )
+        uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: deploy/${{ env.target_dir }} # The folder the action should deploy.
-          clean: true
-          clean-exclude: '["heads", "pull", "tags"]'
-          single-commit: true
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: html # The folder the action should deploy.
+          TARGET_FOLDER: ${{ env.target_dir }}
+          CLEAN: true
+          CLEAN_EXCLUDE: '["heads", "pull", "tags"]'
+          SINGLE_COMMIT: true
+          REPOSITORY_NAME: icbi-lab/scirpy
