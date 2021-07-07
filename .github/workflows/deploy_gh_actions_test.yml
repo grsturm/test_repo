@@ -51,7 +51,6 @@ jobs:
           github_ref: ${{ github.ref }}
 
       - name: Deploy to gh-pages
-        if: ( matrix.os == 'ubuntu-latest' ) &&  ( matrix.python-version == '3.8' )
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           BRANCH: gh-pages # The branch the action should deploy to.
