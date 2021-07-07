@@ -49,6 +49,13 @@ jobs:
           echo "target_dir=$target_dir" >> $GITHUB_ENV
         env:
           github_ref: ${{ github.ref }}
+          
+      - run: |
+          if [ ${{ github.event_name }} = 'pull_request' ]; then
+              echo "REPO=${{ github.event.pull_request.head.repo.full_name }}" >> $GITHUB_ENV
+          else
+              echo "REPO=$GITHUB_REPOSITORY" >> $GITHUB_ENV
+          fi
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@releases/v3
@@ -59,4 +66,4 @@ jobs:
           CLEAN: true
           CLEAN_EXCLUDE: '["heads", "pull", "tags"]'
           SINGLE_COMMIT: true
-          REPOSITORY_NAME: ${{ github.repository }}
+          REPOSITORY_NAME: ${{ env.REPO }}
