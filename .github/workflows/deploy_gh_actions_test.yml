@@ -29,7 +29,7 @@ jobs:
       - name: Run a one-line script
         run: |
           mkdir html
-          echo "Hello World!" > html/index.html
+          echo "Hello World! 001" > html/index.html
           date >> html/index.html
           
       - name: Get target folder for page deploy from github ref
