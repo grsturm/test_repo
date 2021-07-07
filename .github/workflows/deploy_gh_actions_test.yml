@@ -57,7 +57,7 @@ jobs:
           path: html
 
       - name: Deploy to gh-pages
-        if: ${{ github.event_name }} != 'pull_request' ]
+        if: (github.event_name != 'pull_request')
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
