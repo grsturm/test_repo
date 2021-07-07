@@ -50,14 +50,14 @@ jobs:
         env:
           github_ref: ${{ github.ref }}
           
-      - run: |
-          if [ ${{ github.event_name }} = 'pull_request' ]; then
-              echo "REPO=${{ github.event.pull_request.head.repo.full_name }}" >> $GITHUB_ENV
-          else
-              echo "REPO=$GITHUB_REPOSITORY" >> $GITHUB_ENV
-          fi
+      - name: Upload docs as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: html
 
       - name: Deploy to gh-pages
+        if: ${{ github.event_name }} != 'pull_request' ]
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
